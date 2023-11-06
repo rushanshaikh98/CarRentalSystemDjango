@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for order in page_obj %}
+<article class="media content-section">
+    <div class="media-body">
+        <p class="article-content">Car ID : {{ order.car.number_plate }}</p>
+        <p class="article-content">Model : {{ order.car.model.model_name }} || Company : {{ order.car.company.company_name }} || Category : {{ order.car.category.category }} </p>
+        <p class="article-content">Rented From : {{ order.rent_from }} || Rented Till : {{ order.rent_till }}</p>
+        <p class="article-content">Booking Time : {{ order.booking_time }}</p>
+
+        {% if order.final_status == 'True' %}
+            {% if current_date < order.rent_from %}
+                <a href="{% url 'cancel_booking' order.id %}"><button type="button" class= "btn-outline-info">Cancel Booking!</button></a>
+            {% endif %}
+        {% else %}
+            <p class="article-content">Booking cancelled</p>
+        {% endif %}
+        {% if order.fine > 0 %}
+            <p class="article-content">Fine : {{ order.fine }}</p>
+            <p class="article-content">Said Date : {{ order.said_date }}</p>
+            <p class="article-content">Said Time : {{ order.said_time }}</p>
+            <p class="article-content">Proper Condition : {{ order.proper_condition }}</p>
+            <p class="article-content">Description : {{ order.description }}</p>
+            {% if order.fine_paid is False %}
+                <a href="{% url 'fine_index' order.id order.fine %}"><button type="button" class= "btn-outline-info">Pay Fine!</button></a>
+            {% else %}
+                <p class="article-content">You have successfully paid the fine!</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</article>
+{% endfor %}
+
+<div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+</div>
+{% endblock content %}

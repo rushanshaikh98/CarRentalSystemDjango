@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Requests:</h3>
+{% for user in users_list %}
+<article class="media content-section">
+    <div class="media-body">
+        <p>Username : {{ user.user.username }} || Email : {{ user.user.email }}</p>
+        <a class="mr-2" href="{% url 'view_image' user.id_proof %}">View Image!</a>
+        <a href="{% url 'accept_user' user.user.id %}"><button type="button" class= "btn-outline-info">Approve</button></a>
+        <a href="{% url 'reject_user' user.user.id %}"><button type="button" class= "btn-outline-info">Reject</button></a>
+    </div>
+</article>
+{% endfor %}
+{% endblock content %}

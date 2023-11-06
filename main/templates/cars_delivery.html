@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for order in page_obj %}
+<article class="media content-section">
+    <div class="media-body">
+        <p class="article-content">Username : {{ order.user.username }} || Email : {{ order.user.email }}</p>
+        <p class="article-content">Car ID : {{ order.car.number_plate }}</p>
+        <p class="article-content">Model : {{ order.car.model.model_name }} || Company : {{ order.car.company.company_name }} || Category : {{ order.car.category.category }} </p>
+        <p class="article-content">Rented From : {{ order.rent_from }} || Rented Till : {{ order.rent_till }}</p>
+        <a href="{% url 'car_return_review' order.id %}"><button type="button" class= "btn-outline-info">Taken!</button></a>
+    </div>
+</article>
+{% endfor %}
+<div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+</div>
+{% endblock content %}

@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+        <div class="row mb-3">
+            <div class="col-md-6 text-center">
+                <a href="{% url 'create_admins' %}" ><span><button type="button" class="btn btn-default btn-lg colorbutton">Create Admins</button></span></a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a href="{% url 'admin_list' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete Admins</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'add_city' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Add City</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'update_city' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Update City</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'delete_city' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete City</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'add_company' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Add Car Company</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'update_company' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Update Car Company</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'delete_company' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete Car Company</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'add_category' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Add Car Category</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'update_category' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Update Car Category</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'delete_category' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete Car Category</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'add_model' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Add Car Model</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'update_model' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Update Car Model</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'delete_model' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete Car Model</button></span></a>
+            </div>
+        </div>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.is_staff %}
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'create_cars' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Add Cars</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'get_car' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Update Cars</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'get_delete_car' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Delete Cars</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'display_users_list' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Verify Users</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'cars_taking_list' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Cars Taken</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'cars_delivery_list' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Car Delivery</button></span></a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <a href="{% url 'cars_taking_list_late' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Cars Taken(Late)</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'cars_delivery_list_late' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Car Delivery(Late)</button></span></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{% url 'get_maintenance_car' %}"><span><button type="button" class="btn btn-default btn-lg colorbutton">Car Maintenance</button></span></a>
+            </div>
+        </div>
+    {% else %}
+        {% if request.user.is_authenticated and request.user.is_staff is False and request.user.is_superuser is False %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <p>From : {{ dates.rent_from }}</p>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <p>To : {{ dates.rent_till }}</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        {% endif %}
+        {% for car in page_obj %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <p class="article-content">Car ID : {{ car.number_plate }}</p>
+                    <p class="article-content">Company : {{ car.company.company_name }}</p>
+                    <p class="article-content">Model : {{ car.model.model_name }}</p>
+                    <p class="article-content">Category : {{ car.category.category }}</p>
+                    <p class="article-content">Color : {{ car.color }}</p>
+                    <p class="article-content">Mileage : {{ car.mileage }}</p>
+                    <p class="article-content">City : {{ car.city.city }}</p>
+                    <a href="{% url 'view_car' car.id %}"><button type="button" class= "btn-outline-info">View Car!</button></a>
+                </div>
+            </article>
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Admins:</h3>
+{% for user in admins_list %}
+<article class="media content-section">
+    <div class="media-body">
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+        <p>Username : {{ user.username }} || Email : {{ user.email }}</p>
+        <a href="{% url 'delete_admin' user.id %}">
+            <button type="button" type="button" class= "btn-outline-info">Delete!</button>
+        </a>
+    </div>
+</article>
+{% endfor %}
+{% endblock content %}
+
